@@ -1,36 +1,35 @@
-import React      from 'react'
-import PropTypes  from "prop-types";
+import React from "react";
+import PropTypes from "prop-types";
 import classNames from "classnames";
 
 function Button(props) {
-    const classes = classNames(
-        "bg-indigo-500 hover:bg-indigo-700", // background
-        "text-white text-base", // text
-        "py-2 px-4", //spacing
-        "rounded", // border
-        "transition ease-in-out", // effects
-        props.className // custom style
-    )
+  const classes = classNames(
+    "box-border h-10 w-96",
+    "text-base",
+    "font-sans",
+    "bg-indigo-500 hover:bg-indigo-700", // background
+    "text-white text-base", // text
+    "py-2 px-4", //spacing
+    "rounded", // border
+    "transition ease-in-out", // effects
+    props.className // custom style
+  );
 
-    return (
-        <button
-            className={ classes }
-            type="button"
-            onClick={ props.onClick }
-        >
-            { props.label }
-        </button>
-    )
+  return (
+    <button className={classes} type="button" onClick={props.onClick}>
+      {props.label}
+    </button>
+  );
 }
 
 Button.propTypes = {
-    label: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-    className: PropTypes.string,
-}
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
+  className: PropTypes.string,
+};
 
 Button.defaultProps = {
-    className: '',
-}
+  className: "",
+};
 
 export default Button;
