@@ -4,7 +4,6 @@ import classNames from "classnames";
 
 function Button(props) {
   const classes = classNames(
-    "box-border h-10 w-96",
     "text-base",
     "font-sans",
     "bg-indigo-500 hover:bg-indigo-700", // background

@@ -3,10 +3,11 @@ import classNames from "classnames";
 
 export default function TextField(props) {
   const classes = classNames(
-    "box-border h-10 w-96",
-    "text-lg",
+    "border-2 border-gray-300",
+    "min-widht",
     "font-sans",
-    "bg-white-50 hover:bg-white-50", // background
+    "text-base",
+    "bg-white-50", // background
     "text-gray text-base", // text
     "py-2 px-4", //spacing
     "rounded", // border
@@ -15,11 +16,6 @@ export default function TextField(props) {
   );
 
   return (
-    <input
-      type="text"
-      style={{ border: "1px solid black" }}
-      placeholder={props.placeholder}
-      className={classes}
-    />
+    <input type="text" placeholder={props.placeholder} className={classes} />
   );
 }
