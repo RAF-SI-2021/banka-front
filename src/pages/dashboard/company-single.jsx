@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CompanyInformation from "../../components/company/CompanyInformation";
 import CompanyAgreements from "../../components/company/CompanyAgreements";
-import CompanyAccounts from "../../components/company/CompanyAccounts";
 import CompanyContact from "../../components/company/CompanyContact";
 import { getCompany } from "../../clients/companyClient";
+import CompanyBankAccounts from "../../components/company/CompanyBankAccounts";
 
 export default function CompanySinglePage() {
     const params = useParams()
@@ -23,7 +23,7 @@ export default function CompanySinglePage() {
     return (
         <div className='grid gap-5 mb-20'>
             <CompanyInformation company={company}/>
-            <CompanyAccounts/>
+            <CompanyBankAccounts company={company}/>
             <CompanyAgreements/>
             <CompanyContact company={company}/>
         </div>

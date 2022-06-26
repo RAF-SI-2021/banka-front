@@ -26,3 +26,13 @@ export function createCompanyContact(contact) {
     let url = new URL(`${BASE_URL}contact`);
     return post(url, contact);
 }
+
+export function getCompanyBankAccounts(id) {
+    let url = new URL(`${BASE_URL}bankaccount/${id}`);
+    return get(url);
+}
+
+export function createCompanyBankAccount(account) {
+    let url = new URL(`${BASE_URL}bankaccount`);
+    return post(url, account);
+}
