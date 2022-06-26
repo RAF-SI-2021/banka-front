@@ -18,7 +18,6 @@ export async function loginAction(username, password, otp = null) {
         password: password,
         otp: otp,
     };
-    console.log(body);
     const r = await post(url, body);
     authSaveToken(r);
     return r;

@@ -70,7 +70,7 @@ function Button(props) {
 
 Button.propTypes = {
   label: PropTypes.string.isRequired,
-  design: PropTypes.oneOf([BUTTON_DESIGN.PRIMARY, BUTTON_DESIGN.SECONDARY, BUTTON_DESIGN.INLINE]),
+  design: PropTypes.oneOf(["primary", "secondary", "inline"]),
   disabled: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
   loading: PropTypes.bool,

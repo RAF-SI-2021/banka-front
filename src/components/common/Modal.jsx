@@ -10,7 +10,7 @@ function Modal(props) {
         "w-full h-full",
         "overflow-y-auto overflow-x-hidden", // overflow
         "bg-black/25",
-        { "hidden": !props.visible },
+        {"hidden": !props.visible},
     )
 
     const modalStyle = classNames(
@@ -25,7 +25,7 @@ function Modal(props) {
                 <h3 className="text-2xl font-semibold text-gray-900 lg:text-2xl">
                     {props.title}
                 </h3>
-                <ExitButton onClick={props.onClose} />
+                <ExitButton onClick={props.onClose}/>
             </div>
         )
     }
@@ -39,7 +39,7 @@ function Modal(props) {
                         {props.children}
                         {props.cta &&
                             <div className="flex justify-end mt-5">
-                                <Button label={props.ctaText} onClick={props.cta} />
+                                <Button label={props.ctaText} onClick={props.cta}/>
                             </div>
                         }
                     </div>
@@ -50,7 +50,7 @@ function Modal(props) {
 }
 
 Modal.propTypes = {
-    visible: PropTypes.bool.isRequired,
+    visible: PropTypes.bool,
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     children: PropTypes.node,
@@ -61,6 +61,7 @@ Modal.propTypes = {
 }
 
 Modal.defaultProps = {
+    visible: true,
     ctaText: "Click",
 }
 
