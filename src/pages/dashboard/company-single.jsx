@@ -24,7 +24,7 @@ export default function CompanySinglePage() {
         <div className='grid gap-5 mb-20'>
             <CompanyInformation company={company}/>
             <CompanyBankAccounts company={company}/>
-            <CompanyAgreements/>
+            <CompanyAgreements company={company}/>
             <CompanyContact company={company}/>
         </div>
     )

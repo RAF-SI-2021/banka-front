@@ -35,6 +35,7 @@ function CompanyBankAccounts(props) {
                 await createCompanyBankAccount({...form, companyId: props.company.id, active: true})
                 fetchData()
                 Notification("Uspesno ste uneli racun", "", "success")
+                setModal(false)
             } catch (e) {
                 Notification("Doslo je do greske prilikom dodavanje racuna", "Molimo pokusajte opet.", "danger")
             }

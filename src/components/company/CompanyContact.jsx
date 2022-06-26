@@ -31,6 +31,7 @@ function CompanyInformation(props) {
                 await createCompanyContact({...form, companyId: props.company.id})
                 fetchData()
                 Notification("Uspesno ste uneli kontakt osobu", "", "success")
+                setModal(false)
             } catch (e) {
                 Notification("Doslo je do greske prilikom dodavanje kontakt osobe", "Molimo pokusajte opet.", "danger")
             }
