@@ -21,8 +21,7 @@ export function finalizeAgreement(id, file) {
     const formData = new FormData();
     formData.append("file", file)
     let url = new URL(`${BASE_URL}/finalize/${id}`);
-    const headers = {
-    }
+    const headers = {}
     return post(url, formData, false, headers);
 }
 
@@ -44,4 +43,9 @@ export function createAgreement(agreement) {
 export function createAgreementPoint(agreementPoint) {
     let url = new URL(`${BASE_URL}/stavka`);
     return post(url, agreementPoint);
+}
+
+export function editAgreementPoint(agreementPoint) {
+    let url = new URL(`${BASE_URL}/stavka`);
+    return put(url, agreementPoint);
 }

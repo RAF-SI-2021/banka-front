@@ -31,12 +31,15 @@ function StocksDropdown(props) {
             options={createOptions()}
             label="Akcija"
             onChange={handleSelect}
-            defValue={props.selected}/>
+            defValue={props.selected}
+            required={props.requried}
+        />
     )
 }
 
 StocksDropdown.propTypes = {
     selected: PropTypes.string,
+    requried: PropTypes.bool,
     onSelect: PropTypes.func,
     className: PropTypes.string,
 }

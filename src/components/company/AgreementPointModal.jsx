@@ -6,29 +6,48 @@ import Select from "../common/Select";
 import TextField, { VALIDATION_PATTERN } from "../common/TextField";
 import CurrencyDropdown from "../CurrencyDropdown";
 import Button from "../common/Button";
-import { createAgreementPoint } from "../../clients/agreementClient";
+import { createAgreementPoint, editAgreementPoint } from "../../clients/agreementClient";
 import Notification from "../common/Notification";
 import StocksDropdown from "../StocksDropdown";
 import FutureDropdown from "../FutureDropdown";
 
-function CreateAgreementPointModal(props) {
-    const [form, setForm] = useState({
-        kapitalTypePotrazni: "NOVAC",
-        kapitalOznakaPotrazni: "",
-        kolicinaPotrazna: "",
-        kapitalTypeDugovni: "NOVAC",
-        kapitalOznakaDugovni: "",
-        kolicinaDugovna: "",
-    })
+const DEFAULT_FORM = {
+    kapitalTypePotrazni: "NOVAC",
+    kapitalPotrazniOznaka: "",
+    kolicinaPotrazna: "",
+    kapitalTypeDugovni: "NOVAC",
+    kapitalDugovniOznaka: "",
+    kolicinaDugovna: "",
+}
+
+function AgreementPointModal(props) {
+    const [form, setForm] = useState(props.point ? props.point : DEFAULT_FORM)
     const [valid, setValid] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     async function handleSubmit(e) {
         e.preventDefault()
+        setLoading(true)
         try {
-            await createAgreementPoint({...form, ugovorId: props.agreement.id})
+            let r = {
+                ...form,
+                ugovorId: props.agreement.id,
+                kolicinaDugovna: parseInt(form['kolicinaDugovna']),
+                kolicinaPotrazna: parseInt(form['kolicinaPotrazna'])
+            }
+            if (props.point) {
+                r = {...form, stavkaId: form.id}
+                await editAgreementPoint(r)
+            } else {
+                await createAgreementPoint(r)
+            }
+
             Notification("Uspesno ste dodali stavku.", "", "success")
+            setLoading(false)
             props.onSuccess()
+            props.onClose()
         } catch (e) {
+            setLoading(false)
             Notification("Doslo je do greske prilikom dodavanja stavke", "Molimo pokusajte opet.", "danger")
         }
     }
@@ -45,24 +64,43 @@ function CreateAgreementPointModal(props) {
                         className="w-full"
                         options={["NOVAC", "AKCIJA", "FUTURES_UGOVOR"]}
                         onChange={(e) => setForm({...form, kapitalTypePotrazni: e})}
-                        defValue="NOVAC"
+                        defValue={form['kapitalTypePotrazni']}
+                        required
                     />
                     {form['kapitalTypePotrazni'] === "NOVAC" &&
                         <CurrencyDropdown
                             className="w-full"
-                            onSelect={e => setForm({...form, kapitalOznakaPotrazni: e['kodValute']})}
+                            selected={form['kapitalPotrazniOznaka']}
+                            onSelect={e => setForm({
+                                ...form,
+                                kapitalPotrazniOznaka: e['kodValute'],
+                                kapitalPotrazniId: e['id']
+                            })}
+                            requried
                         />
                     }
                     {form['kapitalTypePotrazni'] === "AKCIJA" &&
                         <StocksDropdown
                             className="w-full"
-                            onSelect={e => setForm({...form, kapitalOznakaPotrazni: e['oznakaHartije']})}
+                            selected={form['kapitalPotrazniOznaka']}
+                            onSelect={e => setForm({
+                                ...form,
+                                kapitalPotrazniOznaka: e['oznakaHartije'],
+                                kapitalPotrazniId: e['id']
+                            })}
+                            requried
                         />
                     }
                     {form['kapitalTypePotrazni'] === "FUTURES_UGOVOR" &&
                         <FutureDropdown
                             className="w-full"
-                            onSelect={e => setForm({...form, kapitalOznakaPotrazni: e['oznakaHartije']})}
+                            selected={form['kapitalPotrazniOznaka']}
+                            onSelect={e => setForm({
+                                ...form,
+                                kapitalPotrazniOznaka: e['oznakaHartije'],
+                                kapitalPotrazniId: e['id']
+                            })}
+                            requried
                         />
                     }
                     <TextField
@@ -81,24 +119,43 @@ function CreateAgreementPointModal(props) {
                         className="w-full"
                         options={["NOVAC", "AKCIJA", "FUTURES_UGOVOR"]}
                         onChange={(e) => setForm({...form, kapitalTypeDugovni: e})}
-                        defValue="NOVAC"
+                        defValue={form["kapitalTypeDugovni"]}
+                        requried
                     />
                     {form['kapitalTypeDugovni'] === "NOVAC" &&
                         <CurrencyDropdown
                             className="w-full"
-                            onSelect={e => setForm({...form, kapitalOznakaDugovni: e['kodValute']})}
+                            onSelect={e => setForm({
+                                ...form,
+                                kapitalDugovniOznaka: e['kodValute'],
+                                kapitalDugovniId: e['id']
+                            })}
+                            selected={form["kapitalDugovniOznaka"]}
+                            requried
                         />
                     }
                     {form['kapitalTypeDugovni'] === "AKCIJA" &&
                         <StocksDropdown
                             className="w-full"
-                            onSelect={e => setForm({...form, kapitalOznakaDugovni: e['oznakaHartije']})}
+                            onSelect={e => setForm({
+                                ...form,
+                                kapitalDugovniOznaka: e['oznakaHartije'],
+                                kapitalDugovniId: e['id']
+                            })}
+                            selected={form["kapitalDugovniOznaka"]}
+                            requried
                         />
                     }
                     {form['kapitalTypeDugovni'] === "FUTURES_UGOVOR" &&
                         <FutureDropdown
                             className="w-full"
-                            onSelect={e => setForm({...form, kapitalOznakaDugovni: e['oznakaHartije']})}
+                            onSelect={e => setForm({
+                                ...form,
+                                kapitalDugovniOznaka: e['oznakaHartije'],
+                                kapitalDugovniId: e['id']
+                            })}
+                            selected={form["kapitalDugovniOznaka"]}
+                            required
                         />
                     }
                     <TextField
@@ -106,11 +163,12 @@ function CreateAgreementPointModal(props) {
                         value={form['kolicinaDugovna']}
                         onChange={e => setForm({...form, kolicinaDugovna: e})}
                         validation={VALIDATION_PATTERN.NUMBER}
+                        selected={form["kolicinaDugovna"]}
                         required
                     />
                     <div className="col-span-3 flex justify-end gap-5">
                         <Button label="Nazad" design="secondary" onClick={props.onClose}/>
-                        <Button label="Dodaj" disabled={!valid} type="submit"/>
+                        <Button label="Dodaj" disabled={!valid} type="submit" loading={loading}/>
                     </div>
                 </div>
             </Form>
@@ -119,10 +177,13 @@ function CreateAgreementPointModal(props) {
 
 }
 
-CreateAgreementPointModal.propTypes = {
+AgreementPointModal.propTypes = {
     agreement: PropTypes.object.isRequired,
+    point: PropTypes.object,
     onClose: PropTypes.func,
     onSuccess: PropTypes.func,
 }
 
-export default CreateAgreementPointModal
+AgreementPointModal.defaultProps = {}
+
+export default AgreementPointModal

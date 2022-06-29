@@ -8,14 +8,18 @@ import Notification from "./common/Notification";
 
 function FinalizeAgreementModal(props) {
     const [files, setFiles] = useState([])
+    const [loading, setLoading] = useState(false)
 
     async function handleFinalizeAgreement() {
         try {
+            setLoading(true)
             const r = await finalizeAgreement(props.agreement.id, files[0])
             Notification("Uspesno ste finalizirali ugovor.", "", "success")
+            setLoading(false)
             props.onSuccess(r)
             props.onClose()
         } catch (e) {
+            setLoading(false)
             Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
         }
     }
@@ -49,7 +53,8 @@ function FinalizeAgreementModal(props) {
             })}
             <div className="flex justify-end gap-5 mt-5">
                 <Button label="Nazad" design="secondary" onClick={props.onClose}/>
-                <Button label="Finalizuj" disabled={files.length === 0} onClick={handleFinalizeAgreement}/>
+                <Button label="Finalizuj" disabled={files.length === 0} onClick={handleFinalizeAgreement}
+                        loading={loading}/>
             </div>
         </Modal>
     )
