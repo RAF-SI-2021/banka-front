@@ -8,7 +8,7 @@ function Form(props) {
         if (!formRef || !formRef.current) return false;
         for (let i = 0; i < formRef.current.length; i++) {
             const node = formRef.current[i]
-            if (node.required && (node.value === null || node.value === "")) {
+            if (node.required && (node.value === undefined || node.value === null || node.value === "")) {
                 return false
             }
         }
@@ -35,8 +35,10 @@ Form.propTypes = {
 }
 
 Form.defaultProps = {
-    onSubmit: () => { },
-    onValid: () => { },
+    onSubmit: () => {
+    },
+    onValid: () => {
+    },
 }
 
 export default Form

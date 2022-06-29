@@ -1,15 +1,16 @@
-import React, {useState} from "react";
-import {performPayment} from "../clients/capital";
+import React, { useState } from "react";
+import { performPayment } from "../clients/capital";
 import Alert from "./common/Alert";
-import TextField, {VALIDATION_PATTERN} from "./common/TextField";
+import TextField, { VALIDATION_PATTERN } from "./common/TextField";
 import Button from "./common/Button";
 import Form from "./common/Form";
 import Notification from "./common/Notification";
 import PropTypes from "prop-types";
-import {useDispatch, useSelector} from "react-redux";
-import {isSupervisor} from "../utils";
-import {getAccountCashStateSupervisor} from "../clients/accountClient";
-import {addTransactionsAction} from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { isSupervisor } from "../utils";
+import { getAccountCashStateSupervisor } from "../clients/accountClient";
+import { addTransactionsAction } from "../redux/actions";
+import CurrencyDropdown from "./CurrencyDropdown";
 
 function Payment(props) {
     const dispatch = useDispatch()
@@ -71,10 +72,9 @@ function Payment(props) {
                     validation={VALIDATION_PATTERN.NUMBER}
                     required
                 />
-                <TextField
-                    label="Valuta"
-                    placeholder="RSD"
-                    onChange={(e) => handleChange({valutaOznaka: e})}
+                <CurrencyDropdown
+                    className="w-full"
+                    onSelect={e => handleChange({valutaOznaka: e['kodValute']})}
                     required
                 />
                 <Button

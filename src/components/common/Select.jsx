@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
+import CurrencyDropdown from "../CurrencyDropdown";
 
 function Select(props) {
     const style = classNames(
@@ -17,6 +18,7 @@ function Select(props) {
                 data-testid="common-select"
                 className={style}
                 onChange={(e) => props.onChange(e.target.value)}
+                required={props.required}
             >
                 {!props.defValue && <option disabled={!!props.defValue}/>}
                 {props.options.map((o) =>
@@ -39,9 +41,14 @@ function Select(props) {
 Select.propTypes = {
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     label: PropTypes.string,
+    required: PropTypes.bool,
     onChange: PropTypes.func,
     className: PropTypes.string,
     defValue: PropTypes.string,
 };
+
+Select.defaultProps = {
+    required: false,
+}
 
 export default Select;

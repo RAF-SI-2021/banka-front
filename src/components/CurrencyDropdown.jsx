@@ -27,14 +27,19 @@ function CurrencyDropdown(props) {
 
     return (
         <Select className={props.className} options={createOptions()} label="Valuta" onChange={handleSelect}
-                defValue={props.selected}/>
+                defValue={props.selected} required={props.required}/>
     )
 }
 
 CurrencyDropdown.propTypes = {
     selected: PropTypes.string,
+    required: PropTypes.bool,
     onSelect: PropTypes.func,
     className: PropTypes.string,
+}
+
+CurrencyDropdown.defaultProps = {
+    required: false,
 }
 
 export default CurrencyDropdown
