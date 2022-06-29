@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Block from "../../components/common/Block";
 import { useParams } from "react-router-dom";
-import { deleteAgreementPoint, editAgreement, getAgreement, rejectAgreement } from "../../clients/agreementClient";
+import { editAgreement, getAgreement, rejectAgreement } from "../../clients/agreementClient";
 import TextField from "../../components/common/TextField";
 import TextArea from "../../components/common/TextArea";
 import PlaceholderLoading from 'react-placeholder-loading'
@@ -30,7 +30,6 @@ export default function AgreementSinglePage() {
     function canEdit() {
         if (!agreement) return false
         return agreement.status === "DRAFT";
-
     }
 
     async function handleEditAgreement() {
@@ -142,7 +141,7 @@ export default function AgreementSinglePage() {
                     headings={['ID', 'Potrazni tip', 'Potrazni oznaka', 'Dugovni tip', 'Dugovni oznaka']}
                     rows={createTableRows()}
                     onClick={handleSelectPoint}
-                    clickable
+                    clickable={canEdit()}
                 />
             </Block>
             {modal && <AgreementPointModal
