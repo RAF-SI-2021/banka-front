@@ -1,4 +1,4 @@
-import { get, post, put } from "./api";
+import { delete_, get, post, put } from "./api";
 
 const BASE_URL = `${process.env.REACT_APP_ACCOUNTS_API}/ugovor`;
 
@@ -48,4 +48,9 @@ export function createAgreementPoint(agreementPoint) {
 export function editAgreementPoint(agreementPoint) {
     let url = new URL(`${BASE_URL}/stavka`);
     return put(url, agreementPoint);
+}
+
+export function deleteAgreementPoint(id) {
+    let url = new URL(`${BASE_URL}/stavka/${id}`);
+    return delete_(url);
 }

@@ -6,7 +6,7 @@ import Select from "../common/Select";
 import TextField, { VALIDATION_PATTERN } from "../common/TextField";
 import CurrencyDropdown from "../CurrencyDropdown";
 import Button from "../common/Button";
-import { createAgreementPoint, editAgreementPoint } from "../../clients/agreementClient";
+import { createAgreementPoint, deleteAgreementPoint, editAgreementPoint } from "../../clients/agreementClient";
 import Notification from "../common/Notification";
 import StocksDropdown from "../StocksDropdown";
 import FutureDropdown from "../FutureDropdown";
@@ -21,6 +21,7 @@ const DEFAULT_FORM = {
 }
 
 function AgreementPointModal(props) {
+    const [edit] = useState(!!props.point)
     const [form, setForm] = useState(props.point ? props.point : DEFAULT_FORM)
     const [valid, setValid] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -35,7 +36,7 @@ function AgreementPointModal(props) {
                 kolicinaDugovna: parseInt(form['kolicinaDugovna']),
                 kolicinaPotrazna: parseInt(form['kolicinaPotrazna'])
             }
-            if (props.point) {
+            if (edit) {
                 r = {...form, stavkaId: form.id}
                 await editAgreementPoint(r)
             } else {
@@ -49,6 +50,17 @@ function AgreementPointModal(props) {
         } catch (e) {
             setLoading(false)
             Notification("Doslo je do greske prilikom dodavanja stavke", "Molimo pokusajte opet.", "danger")
+        }
+    }
+
+    async function handleDeletePoint(e) {
+        try {
+            await deleteAgreementPoint(e)
+            Notification("Uspesno ste obrisali stavku", "", "success")
+            props.onSuccess()
+            props.onClose()
+        } catch (e) {
+            Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
         }
     }
 
@@ -167,8 +179,11 @@ function AgreementPointModal(props) {
                         required
                     />
                     <div className="col-span-3 flex justify-end gap-5">
+                        {edit &&
+                            <Button label="Obrisi" design='danger'
+                                    onClick={() => handleDeletePoint(props.point['id'])}/>}
                         <Button label="Nazad" design="secondary" onClick={props.onClose}/>
-                        <Button label="Dodaj" disabled={!valid} type="submit" loading={loading}/>
+                        <Button label={edit ? "Izmeni" : "Dodaj"} disabled={!valid} type="submit" loading={loading}/>
                     </div>
                 </div>
             </Form>

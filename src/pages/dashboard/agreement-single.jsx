@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Block from "../../components/common/Block";
 import { useParams } from "react-router-dom";
-import { editAgreement, getAgreement, rejectAgreement } from "../../clients/agreementClient";
+import { deleteAgreementPoint, editAgreement, getAgreement, rejectAgreement } from "../../clients/agreementClient";
 import TextField from "../../components/common/TextField";
 import TextArea from "../../components/common/TextArea";
 import PlaceholderLoading from 'react-placeholder-loading'
@@ -20,8 +20,12 @@ export default function AgreementSinglePage() {
     const [finalizeModal, setFinalizeModal] = useState(false)
 
     useEffect(() => {
-        getAgreement(id).then(setAgreement)
+        fetchData()
     }, [])
+
+    async function fetchData() {
+        getAgreement(id).then(setAgreement)
+    }
 
     function canEdit() {
         if (!agreement) return false
@@ -100,6 +104,11 @@ export default function AgreementSinglePage() {
         setSelectedPoint(null)
     }
 
+    function handleOnClose() {
+        setSelectedPoint(null)
+        setModal(false)
+    }
+
     function createTableRows() {
         const rows = []
         if (!agreement || !agreement.stavke) return rows
@@ -139,7 +148,7 @@ export default function AgreementSinglePage() {
             {modal && <AgreementPointModal
                 agreement={agreement}
                 point={selectedPoint}
-                onClose={() => setModal(false)}
+                onClose={handleOnClose}
                 onSuccess={handleSuccess}
             />}
             {finalizeModal &&

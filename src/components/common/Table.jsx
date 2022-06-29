@@ -19,7 +19,8 @@ function TableRow(props) {
         return null
     }
 
-    function handleClick() {
+    function handleClick(e) {
+        e.preventDefault()
         props.onClick(props.row)
     }
 
