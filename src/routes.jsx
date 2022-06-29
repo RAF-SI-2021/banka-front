@@ -16,6 +16,8 @@ import ApproveTransactionPage from "./pages/dashboard/transactionappr";
 import CapitalSecurityPage from "./pages/dashboard/capitalsecurity";
 import CompanyListPage from "./pages/dashboard/company-list";
 import CompanySinglePage from "./pages/dashboard/company-single";
+import AgreementListPage from "./pages/dashboard/agreement-list";
+import AgreementSinglePage from "./pages/dashboard/agreement-single";
 
 
 export const URLS = {
@@ -45,6 +47,10 @@ export const URLS = {
         COMPANY: {
             LIST: "company", SINGLE: "company/:companyName"
         },
+        AGREEMENT: {
+            LIST: "agreement",
+            SINGLE: "agreement/:agreementId",
+        }
     },
     LOGIN: "login",
     REGISTER: "register",
@@ -95,6 +101,14 @@ export function AppRoutes() {
                     <Route
                         path={URLS.DASHBOARD.COMPANY.SINGLE}
                         element={<CompanySinglePage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.AGREEMENT.LIST}
+                        element={<AgreementListPage/>}
+                    />
+                    <Route
+                        path={URLS.DASHBOARD.AGREEMENT.SINGLE}
+                        element={<AgreementSinglePage/>}
                     />
                 </Route>
                 <Route element={<PageLayout/>}>

@@ -26,11 +26,13 @@ function CurrencyDropdown(props) {
     }
 
     return (
-        <Select className={props.className} options={createOptions()} label="Valuta" onChange={handleSelect}/>
+        <Select className={props.className} options={createOptions()} label="Valuta" onChange={handleSelect}
+                defValue={props.selected}/>
     )
 }
 
 CurrencyDropdown.propTypes = {
+    selected: PropTypes.string,
     onSelect: PropTypes.func,
     className: PropTypes.string,
 }

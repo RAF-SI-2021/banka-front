@@ -49,8 +49,8 @@ TextArea.propTypes = {
     value: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
-    required: PropTypes.bool,
     className: PropTypes.string,
+    required: PropTypes.bool,
     readOnly: PropTypes.bool,
     onChange: PropTypes.func,
 };

@@ -1,4 +1,4 @@
-import {get, post} from "./api";
+import { get, post } from "./api";
 
 const BASE_URL = process.env.REACT_APP_STOCKS_API;
 
@@ -122,4 +122,14 @@ export function postApproveOrder(id) {
 export function postRejectOrder(id) {
     let url = new URL(BASE_URL + "/berza/order/reject/" + id);
     return post(url);
+}
+
+export function getAllStocks() {
+    let url = new URL(BASE_URL + `/berza/hartija/akcija`);
+    return get(url);
+}
+
+export function getAllFutures() {
+    let url = new URL(BASE_URL + `/berza/hartija/future`);
+    return get(url);
 }

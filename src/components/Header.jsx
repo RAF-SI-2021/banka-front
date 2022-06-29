@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import {Link, useLocation} from "react-router-dom";
-import {URLS} from "../routes";
-import {useSelector} from "react-redux";
-import {getUserSelector} from "../redux/selectors";
-import {logoutAction} from "../clients/client";
+import { Link, useLocation } from "react-router-dom";
+import { URLS } from "../routes";
+import { useSelector } from "react-redux";
+import { getUserSelector } from "../redux/selectors";
+import { logoutAction } from "../clients/client";
 import Logo from "./common/Logo";
-import HoverMenu, {HoverMenuItem} from "./common/HoverMenu";
+import HoverMenu, { HoverMenuItem } from "./common/HoverMenu";
 
 function HeaderItem(props) {
     const location = useLocation();
@@ -79,6 +79,7 @@ function Header() {
                     <HeaderItem path={URLS.DASHBOARD.TRADE} text="Trgovina"/>
                     <HeaderItem path={URLS.DASHBOARD.APPROVE_TRANSACTION} text="Porudžbine"/>
                     <HeaderItem path={URLS.DASHBOARD.COMPANY.LIST} text="Kompanije"/>
+                    <HeaderItem path={URLS.DASHBOARD.AGREEMENT.LIST} text="Ugovori"/>
                     {user && (user["role"]["name"] == "ROLE_ADMIN" || user["role"]["name"] == "ROLE_GL_ADMIN") &&
                         <HeaderItem path={URLS.DASHBOARD.LIST.INDEX} text="Zaposleni"/>}
                 </div>

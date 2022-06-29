@@ -7,8 +7,8 @@ import Modal from "../common/Modal";
 import Form from "../common/Form";
 import TextField from "../common/TextField";
 import Button from "../common/Button";
-import Table from "../common/Table";
 import TextArea from "../common/TextArea";
+import AgreementsTable from "../AgreementsTable";
 
 function CompanyInformation(props) {
     const [agreements, setAgreements] = useState([])
@@ -66,27 +66,10 @@ function CompanyInformation(props) {
         )
     }
 
-    function createTableRows() {
-        const rows = []
-        agreements.map(c => {
-            rows.push([
-                c['documentId'],
-                c['delovodniBroj'],
-                c['status'],
-                c['created'],
-                c['lastChanged'],
-            ])
-        })
-        return rows
-    }
-
     return (
         <>
             <Block title="Ugovori" cta={renderCta()}>
-                <Table
-                    headings={['ID', 'Delovodni broj', 'Status', 'Kreiran', 'Izmenjen']}
-                    rows={createTableRows()}
-                />
+                <AgreementsTable agreements={agreements}/>
             </Block>
             {modal && renderModal()}
         </>

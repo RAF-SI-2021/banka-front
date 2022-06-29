@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import Card from "../../components/common/Card";
+import React, { useEffect, useState } from "react";
 import TextField, {
   VALIDATION_PATTERN,
 } from "../../components/common/TextField";
@@ -9,10 +8,11 @@ import Button from "../../components/common/Button";
 import Select from "../../components/common/Select";
 import { getUserId } from "../../clients/client";
 import { buySellStocks } from "../../clients/stocks";
-import { Store } from "react-notifications-component";
 import Block from "../../components/common/Block";
 import Form from "../../components/common/Form";
 import Notification from "../../components/common/Notification";
+import CurrencyDropdown from "../../components/CurrencyDropdown";
+import StocksDropdown from "../../components/StocksDropdown";
 
 const TYPE = {
   STOCKS: "Stocks",
@@ -21,6 +21,7 @@ const TYPE = {
 };
 
 export default function TradePage() {
+    const [loading, setLoading] = useState(false)
   const [formValid, setFormValid] = useState(false);
   const [securityType, setSecurityType] = useState(TYPE.STOCKS);
   const [form, setForm] = useState({
@@ -55,12 +56,15 @@ export default function TradePage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true)
 
     try {
-      const msg = await buySellStocks(form);
+      await buySellStocks(form);
       Notification("", "Uspesno ste izvrsili trgovinu.", "success")
+        setLoading(false)
     } catch (e) {
       Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
+        setLoading(false)
     }
   }
 
@@ -91,13 +95,7 @@ export default function TradePage() {
     return (
       <>
         <div className="flex">
-          <TextField
-            label="Simbol"
-            placeholder="npr. AAPL"
-            className="grow"
-            onChange={(e) => onChange({ symbol: e })}
-            required
-          />
+          <StocksDropdown onSelect={(e => onChange({symbol: e['oznakaHartije']}))}/>
         </div>
         <div className="flex items-end gap-3">
           <TextField
@@ -123,18 +121,8 @@ export default function TradePage() {
     return (
       <>
         <div className="flex gap-4">
-          <TextField
-            label="From"
-            placeholder="npr. USD"
-            onChange={(e) => onForexChange({ from: e })}
-            required
-          />
-          <TextField
-            label="To"
-            placeholder="npr. RSD"
-            onChange={(e) => onForexChange({ to: e })}
-            required
-          />
+            <CurrencyDropdown onSelect={(e => onForexChange({from: e['kodValute']}))}/>
+            <CurrencyDropdown onSelect={(e => onForexChange({to: e['kodValute']}))}/>
         </div>
         <div className="flex">
           <TextField
@@ -215,7 +203,7 @@ export default function TradePage() {
           />
           {securityType && renderForm()}
           <div>
-            <Button label="Naruci" type="submit" disabled={!formValid} />
+            <Button label="Naruci" type="submit" disabled={!formValid} loading={loading}/>
           </div>
         </div>
       </Form>
