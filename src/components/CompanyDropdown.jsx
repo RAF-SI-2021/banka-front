@@ -1,26 +1,26 @@
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "./common/Select";
-import { getAllStocks } from "../clients/stocks";
+import PropTypes from "prop-types";
+import { getCompanies } from "../clients/companyClient";
 
-function StocksDropdown(props) {
-    const [stocks, setStocks] = useState([])
+function CompanyDropdown(props) {
+    const [companies, setCompanies] = useState([])
 
     useEffect(() => {
-        getAllStocks().then(setStocks)
+        getCompanies().then(setCompanies)
     }, [])
 
     function createOptions() {
         const options = []
-        stocks.map(c => {
-            options.push(c['oznakaHartije'])
+        companies.map(c => {
+            options.push(c['naziv'])
         })
         return options
     }
 
     function handleSelect(e) {
-        const found = stocks.find(c => {
-            return c['oznakaHartije'] === e
+        const found = companies.find(c => {
+            return c['naziv'] === e
         })
         props.onSelect(found)
     }
@@ -29,16 +29,16 @@ function StocksDropdown(props) {
         <Select
             className={props.className}
             options={createOptions()}
-            label="Akcija"
+            label="Kompanija"
             onChange={handleSelect}
             defValue={props.selected}/>
     )
 }
 
-StocksDropdown.propTypes = {
+CompanyDropdown.propTypes = {
     selected: PropTypes.string,
     onSelect: PropTypes.func,
     className: PropTypes.string,
 }
 
-export default StocksDropdown
+export default CompanyDropdown;
