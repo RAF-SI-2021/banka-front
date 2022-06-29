@@ -37,9 +37,9 @@ function Autocomplete(props) {
     }, [query])
 
     return (
-        <div className="relative">
+        <div className="relative grid">
+            <label className="text-sm text-slate-500 pb-1 text-left">{props.label}</label>
             <Combobox value={query} onChange={handleQuery}>
-                <Combobox.Label>{props.label}</Combobox.Label>
                 <Combobox.Input
                     autoComplete="off"
                     className={style}

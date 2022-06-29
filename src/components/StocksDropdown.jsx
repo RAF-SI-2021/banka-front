@@ -33,7 +33,7 @@ function StocksDropdown(props) {
 
     return (
         <>
-            {props.allowCustom && <Autocomplete items={createOptions()} onChange={handleAutocomplete}/>}
+            {props.allowCustom && <Autocomplete label="Akcija" items={createOptions()} onChange={handleAutocomplete}/>}
             {!props.allowCustom &&
                 <Select
                     className={props.className}
