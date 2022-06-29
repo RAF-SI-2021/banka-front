@@ -42,7 +42,7 @@ function CompanyBankAccounts(props) {
         }
 
         return (
-            <Modal id="create-contact-modal" onClose={() => setModal(false)} title="Dodaj kontakt" visible>
+            <Modal id="create-contact-modal" onClose={() => setModal(false)} title="Dodaj racun" visible>
                 <Form onValid={setFormValid} onSubmit={submitForm} className="grid gap-5">
                     <CurrencyDropdown onSelect={(e) => setForm({...form, valutaId: e['id']})} className="w-full"/>
                     <TextField

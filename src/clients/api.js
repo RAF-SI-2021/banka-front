@@ -1,11 +1,16 @@
 import { authGetToken } from "../auth";
 
+const token = authGetToken();
+const DEFAULT_HEADERS = {
+    Authorization: "Bearer " + token,
+}
+
 export function get(url) {
     return request("GET", url);
 }
 
-export function post(url, body = null) {
-    return request("POST", url, body);
+export function post(url, body = null, stringify = true) {
+    return request("POST", url, body, stringify);
 }
 
 export function put(url, body = null) {
@@ -35,17 +40,19 @@ export function delete_(url) {
 
 //TODO: Srediti requestove
 
-async function request(method, url, body) {
-    const token = authGetToken();
+async function request(method, url, body = null, stringify = true) {
+    const b = stringify ? JSON.stringify(body) : body
+    let h = DEFAULT_HEADERS
+
+    if (stringify) {
+        h = {...h, "Content-Type": "application/json"}
+    }
     try {
         const response = await fetch(url, {
             method: method,
-            body: JSON.stringify(body),
+            body: method !== "GET" ? b : null,
             mode: "cors",
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            },
+            headers: h,
         });
         if (!response.ok) {
             throw Error("Request failed");

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Block from "../../components/common/Block";
 import { useParams } from "react-router-dom";
-import { editAgreement, finalizeAgreement, getAgreement, rejectAgreement } from "../../clients/agreementClient";
+import { editAgreement, getAgreement, rejectAgreement } from "../../clients/agreementClient";
 import TextField from "../../components/common/TextField";
 import TextArea from "../../components/common/TextArea";
 import PlaceholderLoading from 'react-placeholder-loading'
@@ -9,14 +9,14 @@ import Button from "../../components/common/Button";
 import CreateAgreementPointModal from "../../components/company/CreateAgreementPointModal";
 import Table from "../../components/common/Table";
 import Notification from "../../components/common/Notification";
+import FinalizeAgreementModal from "../../components/FinalizeAgreementModal";
 
 export default function AgreementSinglePage() {
     const params = useParams();
     const id = params['agreementId']
     const [agreement, setAgreement] = useState(null)
     const [modal, setModal] = useState(false)
-
-    console.log(agreement)
+    const [finalizeModal, setFinalizeModal] = useState(false)
 
     useEffect(() => {
         getAgreement(id).then(setAgreement)
@@ -37,14 +37,6 @@ export default function AgreementSinglePage() {
         }
     }
 
-    async function handleFinalizeAgreement() {
-        try {
-            await finalizeAgreement(agreement.id).then(setAgreement)
-            Notification("Uspesno ste finalizirali ugovor.", "", "success")
-        } catch (e) {
-            Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
-        }
-    }
 
     async function handleRejectAgreement() {
         try {
@@ -87,7 +79,7 @@ export default function AgreementSinglePage() {
                     <div className="flex justify-end gap-5">
                         <Button label="Odbaci" design="danger" onClick={handleRejectAgreement}/>
                         <Button label="Azuriraj" design="secondary" onClick={handleEditAgreement}/>
-                        <Button label="Finalizuj" onClick={handleFinalizeAgreement}/>
+                        <Button label="Finalizuj" onClick={() => setFinalizeModal(true)}/>
                     </div>}
             </div>
         )
@@ -138,6 +130,12 @@ export default function AgreementSinglePage() {
                 onClose={() => setModal(false)}
                 onSuccess={handleAddPointSuccess}
             />}
+            {finalizeModal &&
+                <FinalizeAgreementModal
+                    agreement={agreement}
+                    onSuccess={setAgreement}
+                    onClose={() => setFinalizeModal(false)}
+                />}
         </div>
     )
 }

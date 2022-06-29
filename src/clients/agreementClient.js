@@ -17,9 +17,13 @@ export function editAgreement(agreement) {
     return put(url, agreement);
 }
 
-export function finalizeAgreement(id) {
+export function finalizeAgreement(id, file) {
+    const formData = new FormData();
+    formData.append("file", file)
     let url = new URL(`${BASE_URL}/finalize/${id}`);
-    return post(url);
+    const headers = {
+    }
+    return post(url, formData, false, headers);
 }
 
 export function rejectAgreement(id) {
