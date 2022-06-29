@@ -31,7 +31,7 @@ function CreateAgreementModal(props) {
     return (
         <Modal id="create-contact-modal" onClose={props.onClose} title="Dodaj kontakt" visible>
             <Form onValid={setFormValid} onSubmit={submitForm} className="grid gap-5">
-                {!props.company && <CompanyDropdown onSelect={setCompany}/>}
+                {!props.company && <CompanyDropdown className="w-full" onSelect={setCompany}/>}
                 <TextField
                     label="Delovodni broj"
                     onChange={(e) => setForm({...form, delovodniBroj: e})}
