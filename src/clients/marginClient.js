@@ -9,7 +9,7 @@ export function getMarginState() {
 
 export function createTransaction(amount) {
     const body = {
-        tipTransakcije: (parseInt(amount) < 0) ? "UPLATA" : "ISPLATA",
+        tipTransakcije: (parseInt(amount) >= 0) ? "UPLATA" : "ISPLATA",
         iznos: Math.abs(parseInt(amount)),
         opis: "uplata/isplata",
         kredit: 0,
