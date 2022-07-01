@@ -20,7 +20,7 @@ function MarginTransactionModal(props) {
         transactions.map(t => [
             rows.push([
                 t['id'],
-                t['iznos'],
+                t['iznos'].toFixed(2),
                 t['racun']['brojRacuna'],
                 new Date(t['datumVreme']).toDateString(),
             ])
@@ -29,7 +29,7 @@ function MarginTransactionModal(props) {
     }
 
     return (
-        <Modal id="view-margin-modal" title="Uplata" onClose={props.onClose}>
+        <Modal className="min-w-[1100px]" id="view-margin-modal" title="Uplata" onClose={props.onClose}>
             <Table headings={['ID', 'Iznos', 'Datum']} rows={renderRows()} pagination/>
         </Modal>
     )

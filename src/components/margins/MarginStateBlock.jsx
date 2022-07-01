@@ -24,8 +24,8 @@ function MarginStateBlock() {
         marginState.map(m => {
             rows.push([
                 m['kodValute'],
-                m['ukupno'],
-                m['raspolozivo']
+                m['ukupno'].toFixed(2),
+                m['raspolozivo'].toFixed(2)
             ])
         })
         return rows
