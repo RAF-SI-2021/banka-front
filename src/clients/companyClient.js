@@ -1,4 +1,4 @@
-import { get, post } from "./api";
+import { delete_, get, post } from "./api";
 
 const BASE_URL = `${process.env.REACT_APP_ACCOUNTS_API}/company/`;
 
@@ -10,6 +10,11 @@ export function getCompanies() {
 export function getCompany(name) {
     let url = new URL(`${BASE_URL}naziv/${name}`);
     return get(url);
+}
+
+export function editCompany(company) {
+    let url = new URL(`${BASE_URL}edit`);
+    return post(url, company);
 }
 
 export function createCompany(company) {
@@ -35,4 +40,14 @@ export function getCompanyBankAccounts(id) {
 export function createCompanyBankAccount(account) {
     let url = new URL(`${BASE_URL}bankaccount`);
     return post(url, account);
+}
+
+export function editCompanyBankAccount(account) {
+    let url = new URL(`${BASE_URL}bankaccount/edit`);
+    return post(url, account);
+}
+
+export function deleteCompanyBankAccount(id) {
+    let url = new URL(`${BASE_URL}bankaccount/${id}`);
+    return delete_(url);
 }

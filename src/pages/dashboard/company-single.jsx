@@ -22,7 +22,7 @@ export default function CompanySinglePage() {
 
     return (
         <div className='grid gap-5 mb-20'>
-            <CompanyInformation company={company}/>
+            <CompanyInformation company={company} onEdit={fetchData}/>
             <CompanyBankAccounts company={company}/>
             <CompanyAgreements company={company}/>
             <CompanyContact company={company}/>
