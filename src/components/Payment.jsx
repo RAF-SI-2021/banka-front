@@ -65,18 +65,21 @@ function Payment(props) {
                     onDismiss={() => setError(null)}
                 ></Alert>
             )}
-            <Form className="flex flex-col gap-5" onValid={setFormValid} onSubmit={handleSubmit}>
-                <TextField
-                    label="Iznos"
-                    onChange={(e) => handleChange({iznos: e})}
-                    validation={VALIDATION_PATTERN.NUMBER}
-                    required
-                />
-                <CurrencyDropdown
-                    className="w-full"
-                    onSelect={e => handleChange({valutaOznaka: e['kodValute']})}
-                    required
-                />
+            <Form className="grid gap-5" onValid={setFormValid} onSubmit={handleSubmit}>
+                <div className="flex gap-5">
+                    <CurrencyDropdown
+                        onSelect={e => handleChange({valutaOznaka: e['kodValute']})}
+                        required
+                    />
+                    <div className="grow">
+                        <TextField
+                            label="Iznos"
+                            onChange={(e) => handleChange({iznos: e})}
+                            validation={VALIDATION_PATTERN.NUMBER}
+                            required
+                        />
+                    </div>
+                </div>
                 <Button
                     label="Realizuj"
                     type="submit"

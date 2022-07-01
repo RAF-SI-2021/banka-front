@@ -56,6 +56,8 @@ function CompanyBankAccounts(props) {
             try {
                 await deleteCompanyBankAccount(selected['id'])
                 Notification("Uspesno ste obrisali racun", "", "success")
+                setModal(false)
+                props.onDelete()
             } catch (e) {
                 Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
             }
@@ -145,6 +147,7 @@ function CompanyBankAccounts(props) {
 
 CompanyBankAccounts.propTypes = {
     company: PropTypes.object,
+    onDelete: PropTypes.func,
 }
 
 export default CompanyBankAccounts;

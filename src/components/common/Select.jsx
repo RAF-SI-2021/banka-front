@@ -6,9 +6,10 @@ import CurrencyDropdown from "../CurrencyDropdown";
 function Select(props) {
     const style = classNames(
         "border border-gray-300 rounded",
-        "p-2", //spacing
+        "p-2.5", //spacing
         "bg-white",
-        props.className
+        props.className,
+        {"opacity-50": props.disabled},
     );
 
     return (
@@ -19,6 +20,7 @@ function Select(props) {
                 className={style}
                 onChange={(e) => props.onChange(e.target.value)}
                 required={props.required}
+                disabled={props.disabled}
             >
                 {!props.defValue && <option disabled={!!props.defValue}/>}
                 {props.options.map((o) =>
@@ -42,6 +44,7 @@ Select.propTypes = {
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     label: PropTypes.string,
     required: PropTypes.bool,
+    disabled: PropTypes.bool,
     onChange: PropTypes.func,
     className: PropTypes.string,
     defValue: PropTypes.string,
@@ -49,6 +52,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
     required: false,
+    disabled: false,
 }
 
 export default Select;

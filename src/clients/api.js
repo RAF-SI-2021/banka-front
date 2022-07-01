@@ -1,10 +1,5 @@
 import { authGetToken } from "../auth";
 
-const token = authGetToken();
-const DEFAULT_HEADERS = {
-    Authorization: "Bearer " + token,
-}
-
 export function get(url) {
     return request("GET", url);
 }
@@ -41,8 +36,12 @@ export function delete_(url) {
 //TODO: Srediti requestove
 
 async function request(method, url, body = null, stringify = true) {
+    const token = authGetToken();
+
     const b = stringify ? JSON.stringify(body) : body
-    let h = DEFAULT_HEADERS
+    let h = {
+        Authorization: "Bearer " + token,
+    }
 
     if (stringify) {
         h = {...h, "Content-Type": "application/json"}
@@ -56,6 +55,10 @@ async function request(method, url, body = null, stringify = true) {
         });
         if (!response.ok) {
             throw Error("Request failed");
+        }
+
+        if (response.status === 204) {
+            return null
         }
 
         const contentType = response.headers.get("content-type");

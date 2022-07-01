@@ -23,9 +23,9 @@ export default function CompanySinglePage() {
     return (
         <div className='grid gap-5 mb-20'>
             <CompanyInformation company={company} onEdit={fetchData}/>
-            <CompanyBankAccounts company={company}/>
+            <CompanyBankAccounts company={company} onDelete={fetchData}/>
             <CompanyAgreements company={company}/>
-            <CompanyContact company={company}/>
+            <CompanyContact company={company} onDelete={fetchData}/>
         </div>
     )
 }

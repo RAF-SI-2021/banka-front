@@ -50,6 +50,8 @@ function CompanyInformation(props) {
         try {
             await deleteCompanyContact(form['id'])
             Notification("Uspesno ste obrisali kontakt", "", "success")
+            setModal(false)
+            props.onDelete()
         } catch (e) {
             Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
         }
@@ -172,6 +174,7 @@ function CompanyInformation(props) {
 
 CompanyInformation.propTypes = {
     company: PropTypes.object,
+    onDelete: PropTypes.func,
 }
 
 export default CompanyInformation;

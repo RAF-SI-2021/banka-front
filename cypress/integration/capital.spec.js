@@ -1,4 +1,4 @@
-import {URLS} from "../../src/routes";
+import { URLS } from "../../src/routes";
 
 describe("Capital Page", () => {
     beforeEach(() => {
