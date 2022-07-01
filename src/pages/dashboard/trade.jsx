@@ -169,11 +169,19 @@ export default function TradePage() {
                         * Ako su oba stavljena, radi se Stop-Limit order
                     </div>
                 </div>
-                <Checkbox
-                    label="All or none"
-                    onChange={(e) => onChange({allOrNoneFlag: e})}
-                    value={form["allOrNoneFlag"]}
-                />
+                <div className="flex gap-5">
+                    <Checkbox
+                        label="All or none"
+                        onChange={(e) => onChange({allOrNoneFlag: e})}
+                        value={form["allOrNoneFlag"]}
+                    />
+                    {securityType !== TYPE.FOREX &&
+                        <Checkbox
+                            label="Margina"
+                            onChange={(e) => onChange({marginFlag: e})}
+                            value={form["marginFlag"]}
+                        />}
+                </div>
             </>
         );
     }

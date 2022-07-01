@@ -3,7 +3,6 @@ import Block from "../common/Block";
 import { getMarginCapital } from "../../clients/marginClient";
 import Table from "../common/Table";
 import MarginKapitalModal from "./MarginKapitalModal";
-import Button from "../common/Button";
 
 function MarginKapitalBlock() {
     const [marginState, setMarginState] = useState([])
@@ -39,14 +38,8 @@ function MarginKapitalBlock() {
         setSelected(null)
     }
 
-    function renderCta() {
-        return (
-            <Button label="Uplata" onClick={() => setModal(true)} design="secondary"/>
-        )
-    }
-
     return (
-        <Block title="Pregled kapitala" cta={renderCta()}>
+        <Block title="Pregled kapitala">
             <Table
                 headings={['Tip kapitala', 'Ukupno']}
                 rows={createRows()}

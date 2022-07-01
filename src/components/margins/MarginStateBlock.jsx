@@ -11,8 +11,6 @@ function MarginStateBlock() {
     const [createTransactionModal, setCreateTransactionModal] = useState(false)
     const [viewTransactionsModal, setViewTransactionsModal] = useState(false)
 
-    console.log(marginState)
-
     useEffect(() => {
         fetchData()
     }, [])
