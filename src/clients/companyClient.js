@@ -32,6 +32,16 @@ export function createCompanyContact(contact) {
     return post(url, contact);
 }
 
+export function editCompanyContact(contact) {
+    let url = new URL(`${BASE_URL}contact/edit`);
+    return post(url, contact);
+}
+
+export function deleteCompanyContact(id) {
+    let url = new URL(`${BASE_URL}contact/${id}`);
+    return delete_(url);
+}
+
 export function getCompanyBankAccounts(id) {
     let url = new URL(`${BASE_URL}bankaccount/${id}`);
     return get(url);

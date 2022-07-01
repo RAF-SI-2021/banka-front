@@ -101,7 +101,7 @@ function CompanyBankAccounts(props) {
     }
 
     function handleCloseModal() {
-        setForm(null)
+        setForm({})
         setSelected(null)
         setModal(false)
     }

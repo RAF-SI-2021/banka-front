@@ -47,17 +47,18 @@ function TextField(props) {
     }
 
     function handleChange(e) {
-        setValue(e.target.value);
-        props.onChange(e.target.value);
+        setValue(e);
+        props.onChange(e);
     }
 
     useEffect(() => {
-        setValue(props.value);
+        handleChange(props.value);
     }, [props.value]);
 
     useEffect(() => {
         if (value) {
             isValid();
+            props.onChange(value)
         }
     }, [value]);
 
@@ -74,7 +75,7 @@ function TextField(props) {
                 type={props.type}
                 placeholder={props.placeholder}
                 className={classes}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e.target.value)}
                 required={props.required}
                 disabled={props.readOnly}
             />
@@ -100,6 +101,8 @@ TextField.defaultProps = {
     value: "",
     readOnly: false,
     onValid: () => {
+    },
+    onChange: () => {
     },
 };
 
