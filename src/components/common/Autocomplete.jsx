@@ -14,7 +14,6 @@ function Autocomplete(props) {
 
     const style = classNames(
         "border-2 border-gray-300",
-        "min-widht",
         "font-sans",
         "dark:text-slate-900 bg-white-50", // background
         "text-base", // text
@@ -23,6 +22,7 @@ function Autocomplete(props) {
         "transition ease-in-out", // effects
         "placeholder:text-gray-300",
         "outline outline-0",
+        props.className,
     );
 
     useEffect(() => {
@@ -37,7 +37,7 @@ function Autocomplete(props) {
     }, [query])
 
     return (
-        <div className="grid">
+        <div>
             <label className="text-sm text-slate-500 pb-1 text-left">{props.label}</label>
             <div className="relative">
                 <Combobox value={query} onChange={handleQuery}>
@@ -75,6 +75,7 @@ Autocomplete.propTypes = {
     items: PropTypes.array,
     label: PropTypes.string,
     onChange: PropTypes.func,
+    className: PropTypes.string,
 }
 
 export default Autocomplete

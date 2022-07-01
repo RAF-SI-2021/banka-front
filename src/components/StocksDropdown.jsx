@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { getAllStocks } from "../clients/stocks";
 import Autocomplete from "./common/Autocomplete";
-import Select from "./common/Select";
 
 function StocksDropdown(props) {
     const [stocks, setStocks] = useState([])
@@ -20,30 +19,11 @@ function StocksDropdown(props) {
     }
 
     function handleSelect(e) {
-        const found = stocks.find(c => {
-            return c['oznakaHartije'] === e
-        })
-        props.onSelect(found)
-    }
-
-    // This method will only return string while handleSelect will return full object
-    function handleAutocomplete(e) {
         props.onSelect(e)
     }
 
     return (
-        <>
-            {props.allowCustom && <Autocomplete label="Akcija" items={createOptions()} onChange={handleAutocomplete}/>}
-            {!props.allowCustom &&
-                <Select
-                    className={props.className}
-                    options={createOptions()}
-                    label="Akcija"
-                    onChange={handleSelect}
-                    defValue={props.selected}
-                    required={props.requried}
-                />}
-        </>
+        <Autocomplete label="Akcija" items={createOptions()} onChange={handleSelect} className={props.className}/>
     )
 }
 

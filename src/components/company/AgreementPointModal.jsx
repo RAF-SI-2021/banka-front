@@ -97,8 +97,7 @@ function AgreementPointModal(props) {
                             selected={form['kapitalPotrazniOznaka']}
                             onSelect={e => setForm({
                                 ...form,
-                                kapitalPotrazniOznaka: e['oznakaHartije'],
-                                kapitalPotrazniId: e['id']
+                                kapitalPotrazniOznaka: e,
                             })}
                             requried
                         />
@@ -151,8 +150,7 @@ function AgreementPointModal(props) {
                             className="w-full"
                             onSelect={e => setForm({
                                 ...form,
-                                kapitalDugovniOznaka: e['oznakaHartije'],
-                                kapitalDugovniId: e['id']
+                                kapitalDugovniOznaka: e,
                             })}
                             selected={form["kapitalDugovniOznaka"]}
                             requried
