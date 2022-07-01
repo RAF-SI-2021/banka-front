@@ -37,34 +37,36 @@ function Autocomplete(props) {
     }, [query])
 
     return (
-        <div className="relative grid">
+        <div className="grid">
             <label className="text-sm text-slate-500 pb-1 text-left">{props.label}</label>
-            <Combobox value={query} onChange={handleQuery}>
-                <Combobox.Input
-                    autoComplete="off"
-                    className={style}
-                    onChange={(e) => handleQuery(e.target.value)}
-                />
-                <Combobox.Options className="border border-gray-300 rounded absolute left-0 right-0">
-                    {filtered.map((item) => (
-                        <Combobox.Option
-                            className={""}
-                            key={item}
-                            value={item}>
-                            {({active, selected}) => {
-                                const itemStyle = classNames(
-                                    "bg-white px-1 py-2 hover:bg-gray-100 cursor-pointer rounded",
-                                    {"bg-gray-100": active}
-                                )
-                                return (
-                                    <div className={itemStyle}>{item}</div>
-                                )
-                            }}
+            <div className="relative">
+                <Combobox value={query} onChange={handleQuery}>
+                    <Combobox.Input
+                        autoComplete="off"
+                        className={style}
+                        onChange={(e) => handleQuery(e.target.value)}
+                    />
+                    <Combobox.Options className="border border-gray-300 rounded absolute left-0 right-0">
+                        {filtered.map((item) => (
+                            <Combobox.Option
+                                className={""}
+                                key={item}
+                                value={item}>
+                                {({active, selected}) => {
+                                    const itemStyle = classNames(
+                                        "bg-white px-1 py-2 hover:bg-gray-100 cursor-pointer rounded",
+                                        {"bg-gray-100": active}
+                                    )
+                                    return (
+                                        <div className={itemStyle}>{item}</div>
+                                    )
+                                }}
 
-                        </Combobox.Option>
-                    ))}
-                </Combobox.Options>
-            </Combobox>
+                            </Combobox.Option>
+                        ))}
+                    </Combobox.Options>
+                </Combobox>
+            </div>
         </div>
     )
 }
