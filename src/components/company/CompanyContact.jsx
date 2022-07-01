@@ -39,6 +39,12 @@ function CompanyInformation(props) {
         setEdit(true)
     }
 
+    function handleOpenModal() {
+        setForm({})
+        setModal(true)
+        setEdit(false)
+    }
+
     async function handleDeleteContact() {
         if (!edit) return
         try {
@@ -129,7 +135,7 @@ function CompanyInformation(props) {
 
     function renderCta() {
         return (
-            <Button label="Dodaj" onClick={() => setModal(true)} design="secondary"/>
+            <Button label="Dodaj" onClick={handleOpenModal} design="secondary"/>
         )
     }
 
