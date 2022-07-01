@@ -20,20 +20,25 @@ const TYPE = {
     FUTURES: "Futures",
 };
 
+const DEFAULT_FORM = {
+    symbol: "",
+    hartijaOdVrednostiTip: TYPE.STOCKS,
+    kolicina: "",
+    akcija: "BUY",
+    limitValue: 0,
+    stopValue: 0,
+    allOrNoneFlag: false,
+    marginFlag: false,
+}
+
 export default function TradePage() {
     const [loading, setLoading] = useState(false)
     const [formValid, setFormValid] = useState(false);
     const [securityType, setSecurityType] = useState(TYPE.STOCKS);
-    const [form, setForm] = useState({
-        symbol: "",
-        hartijaOdVrednostiTip: TYPE.STOCKS,
-        kolicina: null,
-        akcija: "BUY",
-        limitValue: 0,
-        stopValue: 0,
-        allOrNoneFlag: false,
-        marginFlag: false,
-    });
+    const [form, setForm] = useState(DEFAULT_FORM);
+    // This is 5min hack for Autocomplete component that can't be reset easy.
+    // It can't get worse than this
+    const [hack, setHack] = useState(false)
 
     const [forexForm, setForexForm] = useState({
         from: "",
@@ -62,6 +67,9 @@ export default function TradePage() {
             await buySellStocks(form);
             Notification("", "Uspesno ste izvrsili trgovinu.", "success")
             setLoading(false)
+            setForm(DEFAULT_FORM)
+            setHack(true)
+            setHack(false)
         } catch (e) {
             Notification("Doslo je do greske", "Molimo pokusajte opet.", "danger")
             setLoading(false)
@@ -200,7 +208,7 @@ export default function TradePage() {
 
     return (
         <Block title="Trgovina">
-            <Form onSubmit={handleSubmit} onValid={setFormValid}>
+            {!hack && <Form onSubmit={handleSubmit} onValid={setFormValid}>
                 <div className="flex flex-col gap-3">
                     <Select
                         label="Hartija vrednosti"
@@ -214,7 +222,7 @@ export default function TradePage() {
                         <Button label="Naruci" type="submit" disabled={!formValid} loading={loading}/>
                     </div>
                 </div>
-            </Form>
+            </Form>}
         </Block>
     );
 }
